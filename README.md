@@ -1,200 +1,233 @@
-## 文章前言
+## Preface
 
-本篇文章我们主要对公链审计中几个值得关注的方面进行简单介绍，对于安全审计人员以及公链开发人员而言这都是一个值得借鉴与思考的项目。
+In this article, we mainly introduce several aspects of public chain audit which are worthy of attention. For security auditors and public chain developers, this is a project worthy of reference and thinking.
 
-## 体系结构
+## Architecture
 
-在介绍公链体系建设之前我们先来看一下区块链的体系结构：
+Before introducing the construction of public chain system, let's take a look at the architecture of blockchain:
 
-**区块链 1.0时代：**
+**Blockchain 1.0 era：**
 
-体系架构：如下图所示
+Architecture: as shown in the figure below  
 
-代表产物：比特币、瑞波币、狗狗币、莱特币、万事达币等
+Representative products: bitcoin, reborn coin, dogcoin, Leyte coin, MasterCard coin, etc
 
 ![blockchain](img/1.png)
 
-**区块链 2.0时代：**
+**Blockchain 2.0 era：**
 
-体系结构：如下图所示
+Architecture: as shown in the figure below  
 
-代表产物：以太坊、LISK、Hyperledger等
+Representative products: Ethereum, lisk, hyperledger, etc  
 
-主要变更：
+Major changes:
 
-- 应用层：增加了智能合约
-- 激励层：缩短出块时间为16秒
-- 共识层：加入DPOS、POS、PBFT
-- 数据层：扩充了区块，支持发送数据和变量，采用优化的加密算法和Merkle树
+- Application layer: added smart contract  
+- Excitation layer: shorten the block time to 16 seconds  
+- Consensus layer: add dpos, POS, pbft  
+- Data layer: expanded the block, support sending data and variables, using optimized encryption algorithm and Merkle tree
 
 ![blockchain](img/2.png)
 
-**区块链 3.0时代：**
+**Blockchain 2.0 era**
 
-体系结构：如下图所示
+Architecture: as shown in the figure below
 
-代表产物：EOS、VAR、AE、Asch、ELA、DFINITY
+Representative products: EOS, VaR, AE, ash, ELA, dfinity
 
-主要变更：区块链在金融行业之外的各行各业的应用场景，能够满足更加复杂的商业逻辑
+Main changes: the application scenarios of blockchain in all walks of life outside the financial industry can meet more complex business logic
 
 ![blockchain](img/3.png)
 
-## 安全建设
+## Sec Construction
 
-下面我们根据区块链的体系架构来分层对区块链公链的安全建设中值得思考的问题进行简单介绍，其中有约75%的问题曾引发公链安全问题，也是公链安全审计中值得关注的一些点，这里以提问的形式给出，以引起大家思考，如果想要进一步进行讨论可以直接在Issue中进行，欢迎大家参与：
+Next, we will give a brief introduction to the problems worthy of consideration in the security construction of the blockchain public chain according to the architecture of the blockchain. About 75% of the problems have caused public chain security problems, which are also some points worthy of attention in the public chain security audit. Here, we give them in the form of questions to arouse our thinking, If you want to have a further discussion, you can do it directly in issue：
 
-#### 数据层
+#### Data layer
 
-数据层是最底层的技术，主要的功能为数据存储、账户和交易的实现与安全。数据存储主要基于Merkle树，通过区块的方式和链式结构实现，大多以KV数据库的方式实现持久化，例如：比特币和以太坊采用的LevelDB。
+Data layer is the bottom layer technology, and its main functions are data storage, account and transaction implementation and security. Data storage is mainly based on Merkle tree, which is realized by block and chain structure. Most of them are persistent by kV database, such as bitcoin and leveldb adopted by Ethereum.  
 
-关于数据层值得我们思考的点有如下几个：
+The data layer is worth thinking about as follows:
 
-1. 公链区块数据结构设计是否合理？
-2. 公链加密算法是否符合密码学要求？
-3. Merkle Tree构建方式设计是否合理？
-4. Merkle Tree节点CURD设计是否合理？
-5. 公链区块时间戳校验逻辑设计是否合理？
-6. 公链数据库数据存储与数据CURD安全性？
-7. 公链私钥/助记词生成算法是否足够安全？
-8. 公链私钥/助记词是否有进行加密存储？
-9. 公链私钥/助记词是否存在滥用/内存残留？
+1. Is the data structure design of public chain block reasonable?  
+2. Does the public chain encryption algorithm meet the requirements of cryptography?  
+3. Is the design of Merkle tree reasonable?  
+4. Is the CRUD design of Merkle tree node reasonable?  
+5. Is the design of public chain block timestamp verification logic reasonable?  
+6. Public chain database data storage and data CURD security?  
+7.  Is the public key/mnemonic generation algorithm secure enough?  
+8. Is public key/mnemonics encrypted?  
+9. Is there any abuse/memory residue in public key/mnemonics?
 
-#### 网络层
+#### Network layer
 
-网络层的主要目的是实现区块链网络节点之间的信息交互，区块链的本质是一个点对点(P2P)网络，每一个节点既能够接收信息，也能够生产信息，节点之间通过维护一个共同的区块链来保持通信。
+The main purpose of the network layer is to realize the information interaction between the nodes of the blockchain network. The essence of the blockchain is a peer-to-peer (P2P) network. Each node can receive information and also produce information. The nodes maintain communication by maintaining a common blockchain.  In the blockchain network, each node can create a new block. After the new block is created, other nodes will be notified by broadcasting. In turn, other nodes will verify the node. When more than 51% of the users in the blockchain network pass the verification, the new block will be added to the main chain.  
 
-在区块链的网络中，每一个节点都可以创造出新的区块，新区块被创造出以后，会通过广播的形式通知其他的节点，而其他节点反过来会对这个节点进行验证，当区块链网络中超过51%的用户对其验证通过以后，这个新的区块就会被添加到主链上。
+There are several points worth thinking about the network layer
 
-关于网络层值得我们思考的点有如下几个：
+1. Is the design of public chain node discovery algorithm reasonable?
+2. Is the design of public chain nodes reasonable?
 
-1. 公链节点发现算法设计是否合理？
-2. 公链节点增删改查设计是否合理？
-3. 公链节点惩罚机制设计是否合理？
-4. 公链节点通信协议设计是否合理？
-5. 公链节点请求处理设计是否合理？
-6. 请求处理数据包大小是否做限制？
-7. 公链交易传播机制设计是否合理？
-8. 公链区块数据同步机制是否合理？
-9. 交易处理相关逻辑设计是否合理？
+3. Is the design of punishment mechanism reasonable?
 
-#### 共识层
+4. Is the design of communication protocol reasonable?
 
-共识层能够让高度分散的节点在去中心化的系统中针对区块数据的有效性达成共识，每一个运行着的区块链都需要一个共识算法来保证出块的有效性和有序性，常见的共识算法有POW、POS、DPOS、POA、POC等。
+5. Is the request processing design of public chain node reasonable?
 
-关于共识层值得我们思考的点有如下几个：
+6. Is there a limit on the size of the request processing packet?
 
-1. 公链共识算法设计是否安全？
-2. 公链共识验证设计是否合理？
-3. 公链共识罚没设计是否合理？
-4. 公链手续费用设计是否合理？
-5. 公链挖矿相关设计是否合理？
-6. 区块难度动态调整设计是否合理？
-7. 区块难度检查逻辑设计是否合理？
-8. 链重组、链重置、链分叉等处理设计？
+7. Is the design of public chain transaction communication mechanism reasonable?
 
-#### 激励层
+8. Is the block data synchronization mechanism reasonable?
 
-公链激励层的目的是提供一定的激励措施来鼓励节点参与区块链的安全验证工作，并确保区块链生态的平衡和良性发展，在去中心化的共有链中，需要设定相应的奖励机制来激励遵守规则的参与记账节点，同时需要建立惩罚机制来惩罚不遵守规则的参与记账节点。区块链激励层将经济因素引入区块链技术体系，带来组织协作效率和生态内价值交换效率的提升，公链的激励机制是保证区块链良性循环发展的重要机制。
+9. Is the logic design of transaction processing reasonable?
 
-关于激励层值得我们思考的点有如下几个：
+#### Consensus layer
 
-1. 公链发行机制设计是否合理？
-2. 公链惩罚机制设计是否合理？
+The consensus layer enables highly dispersed nodes to reach a consensus on the effectiveness of block data in a decentralized system. Every running blockchain needs a consensus algorithm to ensure the effectiveness and order of block output. Common consensus algorithms include pow, POS, dpos, Poa, POC, etc.
 
-#### 合约层
+On the consensus level, we should consider the following points：
 
-合约层封装区块链系统的各类脚本代码、算法以及由此生成的更为复杂的智能合约。如果说数据、网络和共识三个层次作为区块链底层“虚拟机”分别承担数据表示、数据传播和数据验证功能的话，合约层则是建立在区块链虚拟机之上的商业逻辑和算法，是实现区块链系统灵活编程和操作数据的基础。包括比特币在内的数字加密货币大多采用非图灵完备的简单脚本代码来编程控制交易过程，这也是智能合约的雏形，随着技术的发展，已经出现以太坊等图灵完备的可实现更为复杂和灵活的智能合约的脚本语言， 使得区块链能够支持宏观金融和社会系统的诸多应用。
+1. Is the design of public chain consensus algorithm safe?
+2. Is the design of public chain consensus verification reasonable?
 
-关于合约层值得我们思考的点有如下几个：
+3. Is the design of public chain consensus forfeiture reasonable?
 
-1. 合约虚拟机安全设计？
-2. 合约部署/执行/接口？
-3. 智能合约相关安全性？
+4. Is the design of public chain service fee reasonable?
 
-#### 应用层
+5. Is the design of public chain mining reasonable?
 
-应用层封装了区块链的各种应用场景和案例，类似于计算机中的各种软件程序，是普通用户可以真正直接使用的产品，也可以理解为B/S架构的产品中的浏览器端(Browser)。
+6. Is the block difficulty dynamic adjustment design reasonable?
 
-关于应用层值得我们思考的点有如下几个(仅公链而已，不涉及钱包APP/交易所/DEFI等)：
+7. Is the logic design of block difficulty check reasonable?
 
-##### 账户相关
+8. Design of chain reorganization, chain reset, chain bifurcation, etc?
 
-1. 钱包账户CRUD逻辑设计？
-2. 钱包导入导出权限校验？
-3. 钱包密码复杂度相关设计？
-4. 钱包账户地址合法性校验？
+#### Incentive layer
 
-##### RPC相关
+The purpose of the public chain incentive layer is to provide certain incentive measures to encourage nodes to participate in the security verification of the blockchain, and to ensure the balance and healthy development of the blockchain ecology. In the decentralized common chain, it is necessary to set up the corresponding incentive mechanism to encourage the participating accounting nodes who comply with the rules, and establish the punishment mechanism to punish the participating accounting nodes who do not comply with the rules. The incentive layer of blockchain introduces economic factors into the blockchain technology system, which improves the efficiency of organizational cooperation and value exchange within the ecology. The incentive mechanism of public chain is an important mechanism to ensure the virtuous development of blockchain.
 
-1. 公链RPC接口是否需要外置公网？
-2. 公链RPC接口权限是否明确划分？
-3. 公链RPC接口是否有敏感类操作？
-4. 公链RPC接口是否有做异常处理？
-5. 公链RPC接口最大数据处理限制？
-6. 公链RPC接口请求数据编码解码？
-7. 公链RPC请求处理是否开启SSL?
+There are several points worthy of our consideration about the incentive level
 
-##### 并发相关
+1. Is the design of public chain issuing mechanism reasonable?
 
-1. 公链高并发请求处理设计？
-2. 是否设置节点最大连接数？
+2. Is the design of public chain punishment mechanism reasonable?
 
-1. 公链WebUI交互界面是否允许远程访问？
-2. 公链WebUI交互界面是否存在Web类漏洞?
-3. 公链WebUI交互界面是否允许本地存储密码信息？
+#### Contract layer
 
-#### 代码层
+The contract layer encapsulates all kinds of script codes and algorithms of the blockchain system, as well as the more complex smart contracts generated from them. If the three levels of data, network and consensus, as the underlying "virtual machine" of the blockchain, respectively undertake the functions of data representation, data dissemination and data verification, the contract layer is the business logic and algorithm based on the blockchain virtual machine, which is the basis for realizing the flexible programming and data operation of the blockchain system. Most digital cryptocurrencies, including bitcoin, use non Turing complete simple script code to program and control the transaction process, which is also the rudiment of smart contract. With the development of technology, there are Turing complete script languages such as Ethereum that can realize more complex and flexible smart contract, Blockchain can support many applications of macro financial and social systems.
 
-公链中确实没有"代码层"这一说，这里笔者将其提出来主要是用于归类公链开发过程中可能需要考虑的问题：
+We should consider the following points about the contract layer:
 
-1. 公链开发语言特性，例如：Go语言数据读取中的ReadAll()、append特性等
-2. 公链开发语言版本，例如：Go语言某些版本存在远程命令执行
-3. 公链开发规范编码，例如：空指针、切片、异常处理等操作
-4. 公链加密解密处理，例如：未做长度检查的高复杂性编码解码
-5. 数据类型转换处理，例如：HexToByte、Integer.parseInt()等
-6. 基本业务逻辑设计，例如：无限的循环编码次数导致拒绝服务攻击
+1. Contract virtual machine security design?
+2. Contract deployment / execution / interface?
 
-#### 其他项
+3. Security related to smart contract?
 
-除了以上区块链架构层面值得思考的问题之外，还需要考虑一下安全问题：
+#### Application layer
 
-##### 节点安全
+The application layer encapsulates various application scenarios and cases of blockchain, which is similar to various software programs in computers. It is a product that ordinary users can really use directly, and it can also be understood as the browser of B / S architecture products.
 
-1. 节点端数据存储是否加密？
-2. 节点端文件权限是否合理？
-3. 节点运行环境是否安全？
-4. 节点是否非ROOT启动？
-5. 节点端是否存在脆弱性Web服务？
-6. 节点服务器端是否存在不安全的配置？
-7. 节点服务器端是否存在未授权访问类漏洞？
-8. 节点服务器端是否存在SSH账户密码泄露？
+We should consider the following points about the application layer (only public chain, not wallet App/Exchange/DEFI, etc.):
 
-##### 算力攻击
+##### Account related
 
-1. 51%攻击
-2. 公链硬分叉
-3. 算力劫持(蠕虫感染矿机)
+1. CRUD logic design of wallet account?
+2. Check the import and export permission of wallet?
 
-##### 第三方库
+3. Design of wallet password complexity?
 
-是否使用存在漏洞的第三方类库，例如：Jackson-databind、FastJSON等
+4. Check the validity of wallet account address?
 
-##### 中间件类
+##### RPC related
 
-使用使用存在漏洞的中间件，例如：低版本的Tendermint
+1. Does the public RPC interface need an external public network?
+2. Is the public chain RPC interface authority clearly divided?
 
-##### 跨链需求
+3. Does the public RPC interface have sensitive class operations?
 
-1. 跨链方式是否可靠以及合适？
-2. 同构跨链&异构跨链实现方案？
-3. 重复一遍上述小节的安全问题
+4. Does the public RPC interface handle exceptions?
 
-## 项目维护
+5. The maximum data processing limit of public chain RPC interface?
+
+6. Public chain RPC interface requests data encoding and decoding?
+
+7. Is SSL enabled for public chain RPC request processing?
+
+##### Concurrency related
+
+1. Design of high concurrency request processing in public chain?
+2. Set the maximum number of connections?
+
+3. Does the public Chain Web UI interface allow remote access?
+
+4. Is there a web class vulnerability in the public chain webui interface?
+
+5. Is the public chain webui interface allowed to store password information locally?
+
+#### Code layer
+
+It is true that there is no "code layer" in the public chain. Here, the author proposes it mainly to classify the problems that may need to be considered in the process of public chain development:
+
+1. Common chain development language features, such as readall (), append features in go language data reading
+2. Public chain development language version, for example, some versions of go language have remote command execution
+
+3. Public chain development specification coding, such as null pointer, slicing, exception handling and other operations
+
+4. Public chain encryption and decryption processing, such as high complexity encoding and decoding without length check
+
+5. Data type conversion processing, such as hextobyte, integer. Parseint(), etc
+
+6. Basic business logic design, for exam
+
+#### Other items
+
+In addition to the above issues worthy of consideration at the level of blockchain architecture, we also need to consider the following security issues:
+
+##### Node security
+
+1. Is the data storage encrypted?
+2. Is the file permission reasonable?
+
+3. Is the running environment safe?
+
+4. Is the node not root started?
+
+5. Is there a vulnerable web service on the node side?
+
+6. Is there any unsafe configuration on the server side of the node?
+
+7. Is there an unauthorized access vulnerability on the server side of the node?
+
+8. Is the SSH account password leaked on the server side of the node?
+
+##### Computing power attack
+
+1. 51% attack
+2. Hard bifurcation of common chain
+
+3. Computing hijacking (worms infect mining machines)
+
+##### Third party Library
+
+Whether to use the third-party libraries with vulnerabilities, such as Jackson databind, fastjson, etc
+
+##### Middleware 
+
+Use vulnerable middleware, such as the lower version of tendermint
+
+##### Cross chain demand
+
+1. Is the cross chain mode reliable and appropriate?
+2. Isomorphic cross chain & heterogeneous cross chain implementation scheme?
+
+3. Repeat the safety issues in the above section
+
+## Maintenance
 
 - Al1ex@Heptagram
 
-- Kerber0s@Heptagram
 
-## 参与讨论
+## Discussion
 
-直接在Issue中参与相关问题的讨论即可
+Directly participate in the discussion of related issues in issue
