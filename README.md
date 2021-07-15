@@ -43,7 +43,7 @@ Main changes: the application scenarios of blockchain in all walks of life outsi
 
 Next, we will give a brief introduction to the problems worthy of consideration in the security construction of the blockchain public chain according to the architecture of the blockchain. About 75% of the problems have caused public chain security problems, which are also some points worthy of attention in the public chain security audit. Here, we give them in the form of questions to arouse our thinking, If you want to have a further discussion, you can do it directly in issue：
 
-#### Data layer
+### Data layer
 
 Data layer is the bottom layer technology, and its main functions are data storage, account and transaction implementation and security. Data storage is mainly based on Merkle tree, which is realized by block and chain structure. Most of them are persistent by kV database, such as bitcoin and leveldb adopted by Ethereum.  
 
@@ -59,7 +59,7 @@ The data layer is worth thinking about as follows:
 8. Is public key/mnemonics encrypted?  
 9. Is there any abuse/memory residue in public key/mnemonics?
 
-#### Network layer
+### Network layer
 
 The main purpose of the network layer is to realize the information interaction between the nodes of the blockchain network. The essence of the blockchain is a peer-to-peer (P2P) network. Each node can receive information and also produce information. The nodes maintain communication by maintaining a common blockchain.  In the blockchain network, each node can create a new block. After the new block is created, other nodes will be notified by broadcasting. In turn, other nodes will verify the node. When more than 51% of the users in the blockchain network pass the verification, the new block will be added to the main chain.  
 
@@ -82,7 +82,7 @@ There are several points worth thinking about the network layer
 
 9. Is the logic design of transaction processing reasonable?
 
-#### Consensus layer
+### Consensus layer
 
 The consensus layer enables highly dispersed nodes to reach a consensus on the effectiveness of block data in a decentralized system. Every running blockchain needs a consensus algorithm to ensure the effectiveness and order of block output. Common consensus algorithms include pow, POS, dpos, Poa, POC, etc.
 
@@ -103,7 +103,7 @@ On the consensus level, we should consider the following points：
 
 8. Design of chain reorganization, chain reset, chain bifurcation, etc?
 
-#### Incentive layer
+### Incentive layer
 
 The purpose of the public chain incentive layer is to provide certain incentive measures to encourage nodes to participate in the security verification of the blockchain, and to ensure the balance and healthy development of the blockchain ecology. In the decentralized common chain, it is necessary to set up the corresponding incentive mechanism to encourage the participating accounting nodes who comply with the rules, and establish the punishment mechanism to punish the participating accounting nodes who do not comply with the rules. The incentive layer of blockchain introduces economic factors into the blockchain technology system, which improves the efficiency of organizational cooperation and value exchange within the ecology. The incentive mechanism of public chain is an important mechanism to ensure the virtuous development of blockchain.
 
@@ -113,7 +113,7 @@ There are several points worthy of our consideration about the incentive level
 
 2. Is the design of public chain punishment mechanism reasonable?
 
-#### Contract layer
+### Contract layer
 
 The contract layer encapsulates all kinds of script codes and algorithms of the blockchain system, as well as the more complex smart contracts generated from them. If the three levels of data, network and consensus, as the underlying "virtual machine" of the blockchain, respectively undertake the functions of data representation, data dissemination and data verification, the contract layer is the business logic and algorithm based on the blockchain virtual machine, which is the basis for realizing the flexible programming and data operation of the blockchain system. Most digital cryptocurrencies, including bitcoin, use non Turing complete simple script code to program and control the transaction process, which is also the rudiment of smart contract. With the development of technology, there are Turing complete script languages such as Ethereum that can realize more complex and flexible smart contract, Blockchain can support many applications of macro financial and social systems.
 
@@ -124,13 +124,13 @@ We should consider the following points about the contract layer:
 
 3. Security related to smart contract?
 
-#### Application layer
+### Application layer
 
 The application layer encapsulates various application scenarios and cases of blockchain, which is similar to various software programs in computers. It is a product that ordinary users can really use directly, and it can also be understood as the browser of B / S architecture products.
 
 We should consider the following points about the application layer (only public chain, not wallet App/Exchange/DEFI, etc.):
 
-##### Account related
+#### Account related
 
 1. CRUD logic design of wallet account?
 2. Check the import and export permission of wallet?
@@ -139,7 +139,7 @@ We should consider the following points about the application layer (only public
 
 4. Check the validity of wallet account address?
 
-##### RPC related
+#### RPC related
 
 1. Does the public RPC interface need an external public network?
 2. Is the public chain RPC interface authority clearly divided?
@@ -154,7 +154,7 @@ We should consider the following points about the application layer (only public
 
 7. Is SSL enabled for public chain RPC request processing?
 
-##### Concurrency related
+#### Concurrency related
 
 1. Design of high concurrency request processing in public chain?
 2. Set the maximum number of connections?
@@ -165,7 +165,7 @@ We should consider the following points about the application layer (only public
 
 5. Is the public chain webui interface allowed to store password information locally?
 
-#### Code layer
+### Code layer
 
 It is true that there is no "code layer" in the public chain. Here, the author proposes it mainly to classify the problems that may need to be considered in the process of public chain development:
 
@@ -180,11 +180,11 @@ It is true that there is no "code layer" in the public chain. Here, the author p
 
 6. Basic business logic design, for exam
 
-#### Other items
+### Other items
 
 In addition to the above issues worthy of consideration at the level of blockchain architecture, we also need to consider the following security issues:
 
-##### Node security
+#### Node security
 
 1. Is the data storage encrypted?
 2. Is the file permission reasonable?
@@ -201,22 +201,22 @@ In addition to the above issues worthy of consideration at the level of blockcha
 
 8. Is the SSH account password leaked on the server side of the node?
 
-##### Computing power attack
+#### Computing power attack
 
 1. 51% attack
 2. Hard bifurcation of common chain
 
 3. Computing hijacking (worms infect mining machines)
 
-##### Third party Library
+#### Third party Library
 
 Whether to use the third-party libraries with vulnerabilities, such as Jackson databind, fastjson, etc
 
-##### Middleware 
+#### Middleware 
 
 Use vulnerable middleware, such as the lower version of tendermint
 
-##### Cross chain demand
+#### Cross chain demand
 
 1. Is the cross chain mode reliable and appropriate?
 2. Isomorphic cross chain & heterogeneous cross chain implementation scheme?
